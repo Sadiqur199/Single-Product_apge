@@ -7,8 +7,8 @@ import React, { useState } from 'react';
   const product ={
     name : "Classy Modren Smart Watch",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident tempora exercitationem molestias impedit voluptatibus esse officiis vero perspiciatis dolorem ea?",
-    Price: $100,
-    originalPrice: $90,
+    Price: 100,
+    originalPrice: 90,
     colors:["purple","black","blue","cyan"],
     sizes:["S","M","XL","XXL"],
     imageUrls:{
@@ -19,13 +19,21 @@ import React, { useState } from 'react';
     }
   }
 
+  const handleAddToCart = () =>{
+    onAddToCart({
+      ...product,
+      selectedColor,
+      selectedSize,
+      quantity:1,
+    })
+  }
+
   return (
     <div className='max-w-5xl mx-auto bg-white p-8 rounded-md shadow-sm'>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
         <div>
           <img src={product.imageUrls[selectedColor]} alt={product.name} />
         </div>
-      </div>
       {/*product details  */}
       <div>
         <h1 className='text-2xl font-bold mb-2'>{product.name}</h1>
@@ -60,7 +68,30 @@ import React, { useState } from 'react';
             }
           </div>
         </div>
-        
+
+        <div className='mb-4'>
+          <span className='block text-gray-800 font-semibold mb-2'> Wrist Size</span>
+          <div className='flex space-x-4'>
+            {product.sizes.map((size) =>(
+              <button 
+              key ={size}
+              onClick={ () => setSelectedSize(size)}
+              className={`px-4 py-2 border rounded-md ${
+                selectedSize === size
+                ?"border-blue-600 bg-gray-500 text-white"
+                :"border-gray-800"
+              }`}>{size}</button>
+            ))}
+          </div>
+        </div>
+
+        <div className='flex items-center space-x-4 '>
+          <button onclick={handleAddToCart} className='bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700'>Add To Cart</button>
+          <button className='text-blue-600 border border-blue-600 px-6 py-2 rounded-lg hover:bg-blue-500 '>
+            ❤️
+          </button>
+        </div>
+      </div>
       </div>
     </div>
   );
